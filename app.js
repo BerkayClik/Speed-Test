@@ -9,8 +9,8 @@ app.get('/',function (req,res) {
     res.render('hello.ejs')
 })
 
-var server = require('http').createServer(app);
-var io = require('socket.io')(http, { wsEngine: 'ws' });
+var server = require('http', { wsEngine: 'ws' }).createServer(app);
+var io = require('socket.io')(server);
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log("listening on port " + PORT));
 
