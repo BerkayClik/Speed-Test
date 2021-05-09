@@ -71,7 +71,7 @@
   <button id="start-button" class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded-full w-1/2 text-lg"  onclick="startTest()">Click Here to Start the Test!</button>
 </div>
 
-<div class="container mx-auto px-4 sm:px-8" id = "table" style = "display: none;">
+<div class="container mx-auto px-4 sm:px-8" id = "table" >
   <div class="py-8">
       <div>
           <h2 class="text-2xl font-semibold leading-tight">Previous Results</h2>
@@ -108,28 +108,8 @@
                       </th>
                       </tr>
                   </thead>
-                  <tbody>
-                      <tr>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
-                      </td>
-                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
-                          </td>
-                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p class="text-gray-900 whitespace-no-wrap text-center" id = "time">0</p>
-                  </td>
-                      </tr>
-                      </tr>
+                  <tbody id = "tbody">
+                     
                   </tbody>
               </table>
           </div>
@@ -145,11 +125,47 @@
 
 
 <script>
+
+renderTable = () =>{
+  str = ""
+  for(let i = 0; i< clickCount; i++){
+    str += ` <tr>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p class="text-gray-900 whitespace-no-wrap text-center" >${downloads[i]}</p>
+                      </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p class="text-gray-900 whitespace-no-wrap text-center">${uploads[i]}</p>
+                          </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <p class="text-gray-900 whitespace-no-wrap text-center">${downloadSizes[i]}</p>
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p class="text-gray-900 whitespace-no-wrap text-center">${uploadSizes[i]}</p>
+                      </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap text-center">${pings[i]}</p>
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p class="text-gray-900 whitespace-no-wrap text-center" id = "time">${dates[i]}</p>
+                  </td>
+                      </tr>`
+
+  }
+  return str
+
+}
+
+
+
 let clickCount = 0;
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
-const time = document.getElementById('time');
-time.innerText = date;
+let downloads = []
+let uploads = []
+let pings = []
+let dates = []
+let downloadSizes = []
+let uploadSize = []
+
+
 
 
 const table = document.getElementById('table');
@@ -159,6 +175,7 @@ const downloadElem = document.getElementById('download');
 const uploadElem = document.getElementById('upload');
 const downloadedData = document.getElementById('datadown');
 const uploadedData = document.getElementById('datauploaded');
+const dataPlace = document.getElementById('datauploaded');
 
 const socket = io();
 
@@ -275,14 +292,19 @@ let max = Math.max.apply(null, results);
 uploadElem.innerHTML = rounded(max);
 startBtn.style.display = "block";
 startBtn.innerText = "RUN AGAIN";
-if(clickCount === 1) {
-  table.style.display = "block";
-  window.scrollTo({
-  top: document.body.scrollHeight,
-  left: 0,
-  behavior: 'smooth'
-});
-} 
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
+const time = document.getElementById('time');
+time.innerText = date;
+downloads.push(downloadElem.innerText)
+uploads.push(uploadElem.innerText)
+pings.push(pingElem.innerText)
+downloadSizes.push(downloadedData.innerText)
+uploadSizes.push(uploadedData.innerText)
+dates.push(time.innerText)
+document.getElementById('tbody').innerHTML = document.getElementById('tbody').innerHTML + renderTable() 
+
+
 startBtn.onclick = startTest;
 }else{
 chunkSize = calcChunk(result);
