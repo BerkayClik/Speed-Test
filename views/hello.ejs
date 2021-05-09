@@ -184,7 +184,7 @@ const socket = io();
 let results = [];
 let requestStart;
 let testStart;
-let startChunkSize = 100000; // 1 KiB
+let startChunkSize = 100000*1024; // 1 KiB
 let chunkSize;
 let junkData;
 
