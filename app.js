@@ -10,7 +10,7 @@ app.get('/',function (req,res) {
 })
 
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var io = require('socket.io')(http, { wsEngine: 'ws' });
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log("listening on port " + PORT));
 

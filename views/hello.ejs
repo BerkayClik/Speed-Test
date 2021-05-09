@@ -179,8 +179,7 @@ const downloadedData = document.getElementById('datadown');
 const uploadedData = document.getElementById('datauploaded');
 const dataPlace = document.getElementById('datauploaded');
 
-
-var socket = require('socket.io')(http, { wsEngine: 'ws' });
+const socket = io();
 
 let results = [];
 let requestStart;
