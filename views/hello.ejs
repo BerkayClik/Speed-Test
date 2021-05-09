@@ -261,8 +261,9 @@ ping();
 }
 });
 
-let dataDownloaded = 0;
+
 socket.on('download', function(data) {
+let dataDownloaded = 0;
 let elapsed = ( Date.now() - requestStart ) / 1000; //in sec
 let received = data.byteLength * 8 / 1024 / 1024;
 let result = received / elapsed;
