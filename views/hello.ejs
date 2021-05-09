@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CS468 Speed Test</title>
     <link href="../style.css" rel="stylesheet" type="text/css">
     <link href="https://unpkg.com/tailwindcss@%5E1.0/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
@@ -12,23 +12,160 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <div>
-        <div class="speedbox__ping"><i class="fa fa-clock-o"></i> <span id='ping'></span> <span>ms</span></div>
-        <div class="speedbox__up"><i class="fa fa-arrow-circle-up"></i> <span id='upload'></span><span>mb/s</span></div>
-        <div class="speedbox__down"><i class="fa fa-arrow-circle-down"></i><span id='download'></span><span>mb/s</span></div>
-        <div class="flex-1" id="datadown"></div>
-    </div>
-    <button id="start-button" class="flex-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" onclick="startTest()">click</button>
 </div>
+
+  <!-- Tailwind CSS -->
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+
+
+
+  <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+    <!--Card 1-->
+    <div class="rounded overflow-hidden shadow-lg" style = "text-align: center;">
+      <img class="w-full" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/OOjs_UI_icon_download.svg/1200px-OOjs_UI_icon_download.svg.png" alt="download">
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">Download Speed</div>
+        <div class="speedbox__down"><i class="fa fa-arrow-circle-down"></i><span id='download'></span><span>0 Mbps</span></div>
+        <p class="text-gray-700 text-base">
+          On below you can find how much data you have downloaded.
+        </p>
+      </div>
+      <div class="px-6 pt-4 pb-2">
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 text-base" style="text-align: left;">Downloaded File Size:</span>
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 text-base" id = "datadown">0 MB</span>
+      </div>
+    </div>
+    <!--Card 2-->
+    <div class="rounded overflow-hidden shadow-lg" style = "text-align: center;">
+      <img class="w-full" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/OOjs_UI_icon_upload.svg/600px-OOjs_UI_icon_upload.svg.png" alt="upload">
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">Upload Speed</div>
+        <div class="speedbox__up" ><i class="fa fa-arrow-circle-up"></i> <span id='upload' ></span><span>0 Mbps</span></div> 
+        <p class="text-gray-700 text-base">
+          On below you can find how much data you have uploaded.
+        </p>
+      </div>
+      <div class="px-6 pt-4 pb-2">
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 text-base" style="text-align: left;">Uploaded File Size:</span>
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 text-base" id="datauploaded">0 MB</span>
+      </div>
+    </div>
+
+    <!--Card 3-->
+    <div class="rounded overflow-hidden shadow-lg" style = "text-align: center;">
+      <img class="w-full" src="https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/DoubleArrowLeftRight-512.png" alt="ping">
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">Ping</div>
+        <p class=" text-gray-700 text-base">
+          <br>
+          Here you can find your Ping:
+        </p>
+        <br>
+        <span class="font-bold text-xl mb-2 inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2" id = "ping";> ms</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flex justify-center">
+  <button id="start-button" class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded-full w-1/2 text-lg"  onclick="startTest()">Click Here to Start the Test!</button>
+</div>
+
+<div class="container mx-auto px-4 sm:px-8">
+  <div class="py-8">
+      <div>
+          <h2 class="text-2xl font-semibold leading-tight">Previous Results</h2>
+      </div>
+      <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+          <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+              <table class="min-w-full leading-normal">
+                  <thead>
+                      <tr>
+                          <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Download
+                          </th>
+                          <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Download File Size
+                          </th>
+                          <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Ping
+                          </th>
+                          <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Upload
+                          </th>
+                          <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Uploaded File Size
+                          </th>
+                          <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Time
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
+                      </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
+                          </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
+                      </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap text-center">0</p>
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p class="text-gray-900 whitespace-no-wrap text-center" id = "time">0</p>
+                  </td>
+                      </tr>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 
+
+
+
+
 <script>
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
+const time = document.getElementById('time');
+time.innerText = date;
+
 const startBtn = document.getElementById('start-button');
 const pingElem = document.getElementById('ping');
 const downloadElem = document.getElementById('download');
 const uploadElem = document.getElementById('upload');
 const downloadedData = document.getElementById('datadown');
+const uploadedData = document.getElementById('datauploaded');
 
 const socket = io();
 
@@ -41,7 +178,11 @@ let junkData;
 
 
 function startTest(){
-startBtn.style.display = "none";
+startBtn.innerText = "Stop Test!"
+startBtn.onclick = () => {
+  location.reload();
+}
+
 startPing();
 }
 
@@ -95,12 +236,12 @@ socket.emit('upload', data);
 /* Handle Events */
 socket.on('serverPong', function(data) {
 let latency = Date.now() - data;
-pingElem.innerHTML = latency;
+pingElem.innerHTML = latency +" ms";
 results.push(latency);
 if (results.length === 15){
 let result = Math.min.apply(null, results);
 console.log(result + 'ms');
-pingElem.innerHTML = result;
+pingElem.innerHTML = result + " ms";
 startDownload();
 }else{
 ping();
@@ -114,35 +255,36 @@ let received = data.byteLength * 8 / 1024 / 1024;
 let result = received / elapsed;
 junkData = data;
 results.push(result);
-downloadElem.innerHTML = rounded(result) + " Mbit/s";
+downloadElem.innerHTML = rounded(result);
 if(Date.now() - testStart > 1000 * 10){
 let max = Math.max.apply(null, results);
-downloadElem.innerHTML = rounded(max) + " Mbit/s";
+downloadElem.innerHTML = rounded(max);
 startUpload();
 }else{
 chunkSize = calcChunk(result);
 
 dataDownloaded += chunkSize;
-console.log(chunkSize);
-downloadedData.innerHTML = rounded(dataDownloaded)*0.000000125 + " Mbit/s";
+downloadedData.innerHTML = rounded(rounded(dataDownloaded)*0.000000125) + " MB";
 download();
 }
 })
 
+let dataUploaded = 0;
 socket.on('upload', function() {
 let elapsed = ( Date.now() - requestStart ) / 1000; //in sec
 let sent = chunkSize * 8 / 1024 / 1024;
 let result = sent / elapsed;
 results.push(result);
-uploadElem.innerHTML = rounded(result) + " Mbit/s";
+uploadElem.innerHTML = rounded(result);
 if(Date.now() - testStart > 10000){
 let max = Math.max.apply(null, results);
-uploadElem.innerHTML = rounded(max) + " Mbit/s";
+uploadElem.innerHTML = rounded(max);
 startBtn.style.display = "block";
 startBtn.innerHTML = "RUN AGAIN";
 }else{
 chunkSize = calcChunk(result);
-console.log(chunkSize);
+dataUploaded += chunkSize;
+uploadedData.innerHTML = rounded(rounded(dataUploaded)*0.000000125) + " MB";
 upload();
 }
 })
@@ -275,8 +417,8 @@ speed.keyup(function() {
   font-size: 13px;
 }
 .speedbox__up {
-  font-size: 13px;
-  line-height: 1.5em;
+  font-size: 25px;
+  line-height: 1.2em;
 }
 .speedbox__down {
   font-size: 25px;
