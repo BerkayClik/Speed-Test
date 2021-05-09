@@ -277,7 +277,11 @@ startBtn.style.display = "block";
 startBtn.innerText = "RUN AGAIN";
 if(clickCount === 1) {
   table.style.display = "block";
-  window.scrollTo(0,document.body.scrollHeight,'smooth');
+  window.scrollTo({
+  top: document.body.scrollHeight,
+  left: 0,
+  behavior: 'smooth'
+});
 } 
 startBtn.onclick = startTest;
 }else{
