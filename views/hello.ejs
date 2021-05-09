@@ -7,23 +7,18 @@
     <title>Document</title>
     <link href="../style.css" rel="stylesheet" type="text/css">
     <link href="https://unpkg.com/tailwindcss@%5E1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <div class="flex justify-center">
-        <button id="start-button" class="flex-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" onclick="startTest()">click</button>
-
-        <div class="flex-1" id="download"></div>
-        <div class="flex-1" id="upload"></div>
+    <div>
+        <div class="speedbox__ping"><i class="fa fa-clock-o"></i> <span id='ping'></span> <span>ms</span></div>
+        <div class="speedbox__up"><i class="fa fa-arrow-circle-up"></i> <span id='upload'></span><span>mb/s</span></div>
+        <div class="speedbox__down"><i class="fa fa-arrow-circle-down"></i><span id='download'></span><span>mb/s</span></div>
         <div class="flex-1" id="datadown"></div>
     </div>
-    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <div class="speedbox__ping"><i class="fa fa-clock-o"></i> <span id='ping'>0</span> <span>ms</span></div>
-    <div class="speedbox__up"><i class="fa fa-arrow-circle-up"></i> 1.1<span>mb/s</span></div>
-    <div class="speedbox__down"><i class="fa fa-arrow-circle-down"></i> 8.7<span>mb/s</span></div>
-    </div>
-
+    <button id="start-button" class="flex-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" onclick="startTest()">click</button>
 </div>
 
 </body>
