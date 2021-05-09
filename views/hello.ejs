@@ -71,7 +71,7 @@
   <button id="start-button" class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded-full w-1/2 text-lg"  onclick="startTest()">Click Here to Start the Test!</button>
 </div>
 
-<div class="container mx-auto px-4 sm:px-8">
+<div class="container mx-auto px-4 sm:px-8" id = "table" style = "display: none;">
   <div class="py-8">
       <div>
           <h2 class="text-2xl font-semibold leading-tight">Previous Results</h2>
@@ -89,10 +89,7 @@
                               class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
                               Download Fıle Sıze
                           </th>
-                          <th
-                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                              Pıng
-                          </th>
+
                           <th
                               class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
                               Upload
@@ -105,6 +102,10 @@
                               class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
                               Tıme
                           </th>
+                          <th
+                          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                          Pıng
+                      </th>
                       </tr>
                   </thead>
                   <tbody>
@@ -137,17 +138,6 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
 </body>
 
 
@@ -155,11 +145,14 @@
 
 
 <script>
+let clickCount = 0;
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
 const time = document.getElementById('time');
 time.innerText = date;
 
+
+const table = document.getElementById('table');
 const startBtn = document.getElementById('start-button');
 const pingElem = document.getElementById('ping');
 const downloadElem = document.getElementById('download');
@@ -178,6 +171,7 @@ let junkData;
 
 
 function startTest(){
+clickCount++;
 startBtn.innerText = "Stop Test!"
 startBtn.onclick = () => {
   location.reload();
@@ -281,6 +275,9 @@ let max = Math.max.apply(null, results);
 uploadElem.innerHTML = rounded(max);
 startBtn.style.display = "block";
 startBtn.innerText = "RUN AGAIN";
+if(clickCount === 0) {
+  table.style.display = block;
+} 
 startBtn.onclick = startTest;
 }else{
 chunkSize = calcChunk(result);
