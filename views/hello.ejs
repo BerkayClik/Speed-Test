@@ -296,6 +296,11 @@ let max = Math.max.apply(null, results);
 uploadElem.innerHTML = rounded(max);
 startBtn.style.display = "block";
 startBtn.innerText = "RUN AGAIN";
+window.scroll({
+ top: 0, 
+ left: 0, 
+ behavior: 'smooth' 
+});
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
 downloads.push(downloadElem.innerText)
