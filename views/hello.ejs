@@ -109,19 +109,13 @@
                       </tr>
                   </thead>
                   <tbody id = "tbody">
-                     
                   </tbody>
               </table>
           </div>
       </div>
   </div>
 </div>
-
-
 </body>
-
-
-
 
 
 <script>
@@ -157,8 +151,6 @@ renderTable = () =>{
 
 }
 
-
-
 let clickCount = 0;
 let downloads = []
 let uploads = []
@@ -166,9 +158,6 @@ let pings = []
 let dates = []
 let downloadSizes = []
 let uploadSizes = []
-
-
-
 
 const table = document.getElementById('table');
 const startBtn = document.getElementById('start-button');
@@ -201,8 +190,6 @@ startBtn.onclick = () => {
 startPing();
 }
 
-
-/* Start tests */
 function startPing(){
 pingElem.textContent = '';
 results = [];
@@ -225,8 +212,6 @@ testStart = Date.now();
 upload();
 }
 
-
-/* Emit events */
 function ping(){
 setTimeout(function() {
 socket.emit("clientPing", Date.now())     
@@ -305,8 +290,6 @@ downloadSizes.push(downloadedData.innerText)
 uploadSizes.push(uploadedData.innerText)
 dates.push(date)
 document.getElementById('tbody').innerHTML =  renderTable() 
-
-
 startBtn.onclick = startTest;
 }else{
 chunkSize = calcChunk(result);
@@ -317,7 +300,6 @@ upload();
 
 })
 
-/* Helpers */
 function rounded(num){ 
 return Math.round((num + Number.EPSILON) * 100) / 100
 }
@@ -339,17 +321,6 @@ str += randByte;
 }
 return str;
 }
-
-
-let speed = $("#speed");
-let updatedSpeed 
-
-speed.keyup(function() {
-  updatedSpeed = Math.round(speed.val()*180/100)-45;
-
-  $("#speedbox-score").css("transform","rotate("+updatedSpeed+"deg)");
-  console.log(updatedSpeed);
-});
 
 </script>
 </html>
