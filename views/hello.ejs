@@ -131,23 +131,25 @@ renderTable = () =>{
   for(let i = 0; i< clickCount; i++){
     str += ` <tr>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap text-center" >${downloads[i]}</p>
+                          <p class="text-gray-900 whitespace-no-wrap text-center" >${downloads[i]} Mbps</p>
                       </td>
-                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <p class="text-gray-900 whitespace-no-wrap text-center">${uploads[i]}</p>
-                          </td>
-                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap text-center">${downloadSizes[i]}</p>
                         </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p class="text-gray-900 whitespace-no-wrap text-center">${uploads[i]} Mbps</p>
+                          </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                           <p class="text-gray-900 whitespace-no-wrap text-center">${uploadSizes[i]}</p>
                       </td>
                       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap text-center">${pings[i]}</p>
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p class="text-gray-900 whitespace-no-wrap text-center" id = "time">${dates[i]}</p>
                   </td>
+                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap text-center">${pings[i]}</p>
+                    </td>
+                   
                       </tr>`
 
   }
@@ -300,7 +302,7 @@ pings.push(pingElem.innerText)
 downloadSizes.push(downloadedData.innerText)
 uploadSizes.push(uploadedData.innerText)
 dates.push(date)
-document.getElementById('tbody').innerHTML = document.getElementById('tbody').innerHTML + renderTable() 
+document.getElementById('tbody').innerHTML =  renderTable() 
 
 
 startBtn.onclick = startTest;
