@@ -33,7 +33,7 @@ const startBtn = document.getElementById('start-button');
 const pingElem = document.getElementById('ping');
 const downloadElem = document.getElementById('download');
 const uploadElem = document.getElementById('upload');
-const anan = document.getElementById('datadown');
+const downloadedData = document.getElementById('datadown');
 
 const socket = io();
 
@@ -129,18 +129,18 @@ chunkSize = calcChunk(result);
 
 dataDownloaded += chunkSize;
 console.log(chunkSize);
-anan.innerHTML = rounded(dataDownloaded)*0.000000125 + " Mbit/s";
+downloadedData.innerHTML = rounded(dataDownloaded)*0.000000125 + " Mbit/s";
 download();
 }
 })
 
-socket.on('upload', function() {
-let elapsed = ( Date.now() - requestStart ) / 1000; //in sec
+socket.on('upload', function(date) {
+let elapsed = ( date - requestStart ) / 1000; //in sec
 let sent = chunkSize * 8 / 1024 / 1024;
 let result = sent / elapsed;
 results.push(result);
 uploadElem.innerHTML = rounded(result) + " Mbit/s";
-if(Date.now() - testStart > 1000 * 10){
+if(date - testStart > 10000){
 let max = Math.max.apply(null, results);
 uploadElem.innerHTML = rounded(max) + " Mbit/s";
 startBtn.style.display = "block";
