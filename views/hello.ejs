@@ -190,6 +190,8 @@ let junkData;
 
 
 function startTest(){
+dataDownloaded = 0;
+dataUploaded = 0;
 clickCount++;
 startBtn.innerText = "Stop Test!"
 startBtn.onclick = () => {
@@ -261,9 +263,8 @@ ping();
 }
 });
 
-
-socket.on('download', function(data) {
 let dataDownloaded = 0;
+socket.on('download', function(data) {
 let elapsed = ( Date.now() - requestStart ) / 1000; //in sec
 let received = data.byteLength * 8 / 1024 / 1024;
 let result = received / elapsed;
