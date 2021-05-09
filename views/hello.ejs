@@ -281,15 +281,14 @@ let max = Math.max.apply(null, results);
 uploadElem.innerHTML = rounded(max);
 startBtn.style.display = "block";
 startBtn.innerText = "RUN AGAIN";
-console.log("deneme");
+startBtn.onclick = startTest;
 }else{
 chunkSize = calcChunk(result);
 dataUploaded += chunkSize;
 uploadedData.innerHTML = rounded(rounded(dataUploaded)*0.000000125) + " MB";
-startBtn.innerText = "RUN AGAIN";
-console.log("deneme else");
 upload();
 }
+
 })
 
 /* Helpers */
