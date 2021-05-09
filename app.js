@@ -6,7 +6,7 @@ app.set('view engine','ejs')
 
 
 app.get('/',function (req,res) {
-    res.render('hello.ejs')
+    res.render('index.ejs')
 })
 
 var server = require('http', { wsEngine: 'ws' }).createServer(app);
@@ -15,24 +15,18 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log("listening on port " + PORT));
 
 io.on('connection', function (socket) {
-    console.log("connected")
-
-    socket.on('clientPing', (msg) => {
-        socket.emit('serverPong', msg)
+    socket.on('userPingValue', (msg) => {
+        socket.emit('serverPingValue', msg)
     });
 
-    socket.on('download', (chunkSize) => {
-        const data = crypto.randomBytes(chunkSize);
+    socket.on('download', (bitsSentSize) => {
+        const data = crypto.randomBytes(bitsSentSize);
         socket.emit('download', data);
     });
 
     socket.on('upload', (data) => {
         socket.emit('upload', Date.now());
     });
-
-    socket.on('disconnect', function () {
-        console.log("disconnected");
-    })
 });
 
 app.use(function(req, res, next) {
